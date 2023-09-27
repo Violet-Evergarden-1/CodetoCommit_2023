@@ -143,16 +143,16 @@ int Partsort2(int* a, int left, int right)
 int Patrsort3(int* a, int left, int right)
 {
 	int prev = left, cur = left + 1;
-	int key = a[left];
+	int keyi = left;
 	while (cur <= right)
 	{
-		if (a[cur] < key && ++prev != cur)
+		if (a[cur] < a[keyi] && ++prev != cur)
 		{
 			Swap(&a[cur], &a[prev]);
 		}
 		cur++;
 	}
-	Swap(&a[prev], &key);
+	Swap(&a[prev], &a[keyi]);
 	return prev;
 }
 
@@ -162,8 +162,7 @@ void BubbleSort(int* a, int n)
 	for (int i = 0; i < n - 1; i++)
 	{
 		int flag = 0;
-		int j = 0;
-		for (j = 0; j < n - 1; j++)
+		for (int j = 0; j < n - 1; j++)
 		{
 			if (a[j] > a[j + 1])
 			{
@@ -248,6 +247,7 @@ int PartSort2(int* a, int left, int right)
 	a[left] = key;
 	return left;
 }
+
 // 快速排序前后指针法
 int PartSort3(int* a, int left, int right)
 {
@@ -271,7 +271,7 @@ void QuickSort(int* a, int begin, int end)
 {
 	if (begin > end)
 		return;
-	int keyi = PartSort3(a, begin, end);
+	int keyi = PartSort1(a, begin, end);
 	QuickSort(a, begin, keyi - 1);
 	QuickSort(a, keyi + 1, end);
 }
@@ -326,23 +326,17 @@ void _MergeSort(int* a, int* tmp, int begin, int end)
 
 	while (begin1 <= end1 && begin2 <= end2)
 	{
-		if (a[begin1] < a[begin2])
-		{
+		if (a[begin1] <= a[begin2])
 			tmp[index++] = a[begin1++];
-		}
 		else
 			tmp[index++] = a[begin2++];
 	}
 
 	while (begin1 <= end1)
-	{
 		tmp[index++] = a[begin1++];
-	}
 
 	while (begin2 <= end2)
-	{
 		tmp[index++] = a[begin2++];
-	}
 
 	memcpy(a + begin, tmp + begin, sizeof(int) * (end - begin + 1));
 }
@@ -381,8 +375,10 @@ void MergeSortNonR(int* a, int n)
 			int begin2 = i + gap, end2 = i + 2 * gap - 1;
 			int index = i;
 
-			end1 >= n ? end1 = n - 1 : end1;
-			begin2 >= n ? begin2 = n - 1 : begin2;
+			//if (end1 >= n||begin2 >= n)
+			if (begin2 >= n)
+				break;
+
 			end2 >= n ? end2 = n - 1 : end2;
 
 
@@ -406,7 +402,7 @@ void MergeSortNonR(int* a, int n)
 				tmp[index++] = a[begin2++];
 			}
 
-			memcpy(a + i, tmp + i, sizeof(int) * (2 * gap));
+			memcpy(a + i, tmp + i, sizeof(int) * (end2 - i + 1));
 		}
 		gap *= 2;
 	}
@@ -415,16 +411,16 @@ void MergeSortNonR(int* a, int n)
 
 int main()
 {
-	int a[] = { 5,3,4,5,2,4,1,9,7,5 };
+	int a[] = { 0,4,7,2,8,0,8,6,4,7 };
 	int sz = sizeof(a) / sizeof(a[0]);
-	MergeSortNonR(a, sz);
+	QuickSort(a, 0, sz - 1);
 	print(a, sizeof(a) / sizeof(a[0]));
 
 	printf("\n");
 
 	int b[] = { 9,8,7,6,5,4,3,2,1,0 };
 	sz = sizeof(b) / sizeof(b[0]);
-	MergeSortNonR(b, sz);
+	QuickSort(b, 0, sz - 1);
 	print(b, sizeof(b) / sizeof(b[0]));
 
 	return 0;
