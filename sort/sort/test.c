@@ -58,7 +58,7 @@ void sortTest()
 	//int a[] = { 8,0,3,5,7 };
 	int sz = sizeof(a) / sizeof(a[0]);
 
-	BubbleSort(a, sz);
+	BubbleSort(a,sz);
 
 	for (int i = 0; i < sz; i++)
 	{

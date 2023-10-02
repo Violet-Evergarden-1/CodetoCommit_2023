@@ -1,4 +1,5 @@
 #include"sort.h"
+#include"Stack.h"
 
 void Swap(int* a, int* b)
 {
@@ -78,10 +79,11 @@ void AdjustDwon(int* a, int n, int root)
 {
 	int parent = root;
 	int child = parent * 2 + 1;
-	if (child + 1 < n && a[child + 1] > a[child])
-		child = child + 1;
 	while (child < n)
 	{
+		if (child + 1 < n && a[child + 1] > a[child])
+			child = child + 1;
+
 		if (a[parent] < a[child])
 			Swap(&a[parent], &a[child]);
 		parent = child;
@@ -122,25 +124,180 @@ void BubbleSort(int* a, int n)
 				Swap(&a[j], &a[j + 1]);
 			}
 		}
-		if (flag = 1)
+		if (flag == 1)
 			break;
 	}
 }
 
 // 快速排序递归实现
+
+//三数取中
+int GetMid(int* a, int left, int right)
+{
+	int mid = (left + right) / 2;
+	if (a[mid] < a[left])
+	{
+		if (a[left] < a[right])
+			return left;
+		else if (a[right] < a[mid])
+			return mid;
+		else 
+			return right;
+	}
+	else
+	{
+		if (a[left] > a[right])
+			return left;
+		else if (a[right] > a[mid])
+			return mid;
+		else 
+			return right;
+	}
+}
+
 // 快速排序hoare版本
-int PartSort1(int* a, int left, int right);
+int PartSort1(int* a, int left, int right)
+{
+	int keyi = left;
+	while (left < right)
+	{
+		while (left < right && a[right] >= a[keyi])
+			right--;
+		while (left < right && a[left] <= a[keyi])
+			left++;
+		Swap(&a[left], &a[right]);
+	}
+	Swap(&a[keyi], &a[left]);
+
+	return left;
+}
 // 快速排序挖坑法
-int PartSort2(int* a, int left, int right);
+int PartSort2(int* a, int left, int right)
+{
+	int key = a[left];
+	int hole = left;
+	while (left < right)
+	{
+		while (left < right && a[right] >= key)
+		{
+			right--;
+		}
+		a[hole] = a[right];
+		hole = right;
+		while (left < right && a[left] <= key)
+		{
+			left++;
+		}
+		a[hole] = a[left];
+		hole = left;
+	}
+	a[hole] = key;
+	return hole;
+}
 // 快速排序前后指针法
-int PartSort3(int* a, int left, int right);
-void QuickSort(int* a, int left, int right);
+int PartSort3(int* a, int left, int right)
+{
+	int prev = left, cur = left + 1;
+	int keyi = left;
+	while (cur <= right)
+	{
+		if (a[cur] < a[keyi] && prev++ != cur)
+			Swap(&a[cur], &a[prev]);
+		cur++;
+	}
+	Swap(&a[prev], &a[keyi]);
+	return prev;
+}
+
+void QuickSort(int* a, int left, int right)
+{
+	if (left >= right)
+		return;
+
+	//区间内元素个数 <= 10，调用直接插入排序
+	if (right - left <= 10)
+	{
+		//注意：起始地址是a + begin,不是a
+		InsertSort(a+left, right + 1);
+	}
+
+	int keyi = PartSort3(a,left,right);
+	QuickSort(a, left, keyi - 1);
+	QuickSort(a, keyi + 1,right);
+}
 
 // 快速排序 非递归实现
-void QuickSortNonR(int* a, int left, int right);
+void QuickSortNonR(int* a, int left, int right)
+{
+	ST st;
+	STInit(&st);
+
+	STPush(&st, right);
+	STPush(&st, left);
+
+	while (!STEmpty(&st))
+	{
+		left = STTop(&st);
+		STPop(&st);
+		right = STTop(&st);
+		STPop(&st);
+
+		int keyi = PartSort3(a, left, right);
+
+		if (right > keyi + 1)
+		{
+			STPush(&st, right);
+			STPush(&st, keyi + 1);
+		}
+		if (left < keyi - 1)
+		{
+			STPush(&st, keyi - 1);
+			STPush(&st, left);
+		}
+	}
+	STDestory(&st);
+}
+
+void _MergeSort(int* a,int*tmp, int left, int right)
+{
+	if (left >= right)
+		return;
+
+	int mid = (left + right) / 2;
+	_MergeSort(a, tmp, left, mid);
+	_MergeSort(a, tmp, mid + 1, right);
+
+	int begin1 = left, end1 = mid;
+	int begin2 = mid+1, end2 = right;
+	int index = left;
+
+	while (begin1 <= end1 && begin2 <= end2)
+	{
+		if (a[begin1] <= a[begin2])
+			tmp[index++] = a[begin1++];
+		else
+			tmp[index++] = a[begin2++];
+	}
+	while (begin1 <= end1)
+		tmp[index++] = a[begin1++];
+	while (begin2 <= end2)
+		tmp[index++] = a[begin2++];
+
+	memcpy(a + left, tmp + left, sizeof(int) * (right - left + 1));
+}
 
 // 归并排序递归实现
-void MergeSort(int* a, int n);
+void MergeSort(int* a, int n)
+{
+	int* tmp = (int*)malloc(sizeof(int) * n);
+	if (tmp == NULL)
+	{
+		perror("malloc failed");
+		exit(-1);
+	}
+
+	_MergeSort(a, tmp, 0, n-1);
+}
 // 归并排序非递归实现
 void MergeSortNonR(int* a, int n);
 
