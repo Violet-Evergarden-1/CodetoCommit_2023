@@ -302,4 +302,37 @@ void MergeSort(int* a, int n)
 void MergeSortNonR(int* a, int n);
 
 // ¼ÆÊýÅÅÐò
-void CountSort(int* a, int n);
+void CountSort(int* a, int n)
+{
+	int min = a[0], max = a[0];
+	for (int i = 0; i < n; i++)
+	{
+		if (a[i] < min)
+			min = a[i];
+		if (a[i] > max)
+			max = a[i];
+	}
+
+	int range = max - min + 1;
+	int* tmp = (int*)calloc(range,sizeof(int));
+	if (tmp == NULL)
+	{
+		perror("malloc failed");
+		exit(-1);
+	}
+
+	for (int i = 0; i < n; i++)
+	{
+		tmp[a[i] - min]++;
+	}
+	
+	int i = 0;
+	for (int index = 0; index < range; index++)
+	{
+		while (tmp[index]--)
+		{
+			a[i++] = index + min;
+		}
+	}
+	free(tmp);
+}
