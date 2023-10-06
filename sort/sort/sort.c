@@ -299,7 +299,52 @@ void MergeSort(int* a, int n)
 	_MergeSort(a, tmp, 0, n-1);
 }
 // 归并排序非递归实现
-void MergeSortNonR(int* a, int n);
+void MergeSortNonR(int* a, int n)
+{
+	int* tmp = (int*)malloc(sizeof(int) * n);
+	if (tmp == NULL)
+	{
+		perror("malloc failed");
+		exit(-1);
+	}
+
+	int gap = 1;
+	while (gap < n)
+	{
+		for (int i = 0; i < n; i += gap * 2)
+		{
+			int begin1 = i, end1 = i + gap - 1;
+			int begin2 = i + gap, end2 = i + gap * 2 - 1;
+			//[i,i+gap-1] [i+gap,i+gap*2-1],每个区间2*gap个数据
+			int index = i;
+
+			//end1和begin2越界,不需要归并
+			if (end1 >= n )
+				break;
+
+			//只有end2越界
+			if (end2 >= n)
+				end2 = n - 1;
+
+			//归并
+			while (begin1 <= end1 && begin2 <= end2)
+			{
+				if (a[begin1] <= a[begin2])
+					tmp[index++] = a[begin1++];
+				else
+					tmp[index++] = a[begin2++];
+			}
+			while (begin1 <= end1)
+				tmp[index++] = a[begin1++];
+			while (begin2 <= end2)
+				tmp[index++] = a[begin2++];
+
+			//将每组归并的数据返回原数组,归并大小即end2-i+1,
+			memcpy(a + i, tmp + i, sizeof(int) * (end2 - i + 1));
+		}
+		gap *= 2;
+	}
+}
 
 // 计数排序
 void CountSort(int* a, int n)

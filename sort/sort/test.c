@@ -54,11 +54,11 @@ void TestOP()
 void sortTest()
 {
 
-	int a[] = { 2,4,6,4,8,0,3,5,7,3 };
+	int a[] = { 2,4,6,4,8,0,3,5,4,7,4 };
 	//int a[] = { 8,0,3,5,7 };
 	int sz = sizeof(a) / sizeof(a[0]);
 
-	CountSort(a,sz);
+	MergeSortNonR(a,sz);
 
 	for (int i = 0; i < sz; i++)
 	{
