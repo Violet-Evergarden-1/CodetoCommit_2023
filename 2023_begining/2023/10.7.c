@@ -292,11 +292,103 @@
 //}
 
 //电子手表https://ac.nowcoder.com/acm/contest/42385/A
-int main()
-{
+//int main()
+//{
+//	int HH, MM, SS;
+//	scanf("%d:%d:%d", &HH, &MM, &SS);
+//	int watch = HH * 3600 + MM * 60 + SS;
+//	scanf("%d:%d:%d", &HH, &MM, &SS);
+//	int time = HH * 3600 + MM * 60 + SS;
+//	scanf("%d:%d:%d", &HH, &MM, &SS);
+//	int tool = HH * 3600 + MM * 60 + SS;
+//
+//	int count = 0;
+//	while (watch != time)
+//	{
+//		watch += tool;
+//		count++;
+//		watch %= 24 * 3600;
+//		if (count > 24 * 3600)
+//		{
+//			printf("-1");
+//			return 0;
+//		}
+//	}
+//	printf("%d", count);
+//	return 0;
+//}
 
-}
+//小C的学习资料https://ac.nowcoder.com/acm/contest/42385/C 
+//敲了半天通过80%，气死我了
+//int main()
+//{
+//	char src[] = "Tomcat is a male ccatat";
+//	char des[] = "cat";
+//	char tmp[1000010];
+//
+//	int len_d = strlen(des);
+//	if (len_d == 0)
+//	{
+//		printf("%s\n", src);
+//		return 0;
+//	}
+//
+//	char* p = strstr(src, des);
+//	while (p)
+//	{
+//		strcpy(tmp, p + len_d);
+//		*p = '\0';
+//		strcat(src, tmp);
+//
+//		p = strstr(src, des);
+//	}
+//	puts(src);
+//	return 0;
+//}
 
 
-
+//编码https://ac.nowcoder.com/acm/contest/42385/E
+//#include <stdio.h>
+//#include <math.h>
+//
+//int main() {
+//	//创建26进制数组
+//	char str[26];
+//	for (int i = 1; i < 26; i++) 
+//	{
+//		str[i] = 'A' + i - 1;
+//	}
+//	str[0] = 'Z';
+//	
+//	int n = 0;
+//	//scanf("%d", &n);
+//	//while (n--)
+//	{
+//		int num = 52;
+//		//scanf("%d", &num);
+//
+//		//定义储存26进制字母的数组
+//		char ret[1000];
+//		int index = 0, tmp = 0;
+//
+//		//转进制 得到逆向的字符串
+//
+//		while (num > 0)
+//		{
+//			tmp = num % 26;
+//			ret[index++] = str[tmp];
+//			num /= 26;
+//			if (tmp == 0)
+//				num--;
+//		}
+//
+//		//把逆向的字符串正向输出
+//		while (index--)
+//		{
+//			printf("%c", ret[index]);
+//		}
+//		printf("\n");
+//	}
+//	return 0;
+//}
 
