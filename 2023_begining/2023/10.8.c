@@ -69,15 +69,27 @@
 //    scanf("%d", &num_wat);
 //
 //    int defH[100010] = { 0 };
-//    int min_defH[] = { 0 };
-//    int index=0
+//    int index = 0;
 //    for (int i = 1; i <= num_def; i++)
 //    {
 //        int high = 0;
 //        scanf("%d", &high);
 //        defH[i] = high;
-//        if (defH[i] < defH[min_defHi])
-//            min_defHi = i;
+//    }
+//
+//    int min_defH = defH[0];
+//    for (int i = 1; i <= num_def; i++)
+//    {
+//        if (defH[i] < min_defH)
+//            min_defH = defH[i];
+//    }
+//
+//    int min_defHi[100] = { 0 };
+//    int index = 0;
+//    for (int i = 1; i <= num_def; i++)
+//    {
+//        if (defH[i] = min_defH)
+//            min_defHi[index++] = i;
 //    }
 //
 //    if (num_wat < 100000)
@@ -103,10 +115,12 @@
 //        {
 //            int min = 0, max = 0;
 //            scanf("%d %d", &min, &max);
-//            if (min <= min_defHi && min_defHi <= max)
+//
+//            for (int j = min; j <= max; j++)
 //            {
-//                defH[min_defHi]--;
-//                if (defH[min_defHi] < 0)
+//                if(j)
+//                defH[j]--;
+//                if (defH[j] < 0)
 //                {
 //                    printf("%d", i);
 //                    return 0;
@@ -247,62 +261,61 @@
 //	return 0;
 //}
 
-int cmp_llong(const void* p1, const void* p2)
-{
-	return(*(long long*)p2 - *(long long*)p1);
-}
-
-int get_maxi(long long map[100001], int range)
-{
-	int maxi = 0;
-	for (int i = 0; i <= range; i++)
-	{
-		if (map[i] > map[maxi])
-			maxi = i;
-	}
-	return maxi;
-}
-
-int main()
-{
-	int range = 0;
-	scanf("%d", &range);
-	long long map[100001] = { 0 };
-	int m, n;
-	scanf("%d %d", &m, &n);
-	long long num = m * n;
-	for (int i = 0; i < num; i++)
-	{
-		int ball = 0;
-		scanf("%d", &ball);
-		map[ball]++;
-	}
-
-	long long candidate = 0, count = 0;
-	int i = get_maxi(map, range);
-	while(num--)
-	{
-		if (count == 0)
-		{
-			candidate = i;
-			map[i]--;
-			count++;
-		}
-		else if (candidate == i)
-		{
-			map[i]--;
-			count++;
-		}
-		else if (candidate != i)
-		{
-			map[i]--;
-			count--;
-		}
-		if (map[i] == 0)
-		{
-			i = get_maxi(map, range);
-		}
-	}
-
-	printf("%lld", count);
-}
+//int cmp_llong(const void* p1, const void* p2)
+//{
+//	return(*(long long*)p2 - *(long long*)p1);
+//}
+//
+//int get_maxi(long long map[100001], int range)
+//{
+//	int maxi = 0;
+//	for (int i = 0; i <= range; i++)
+//	{
+//		if (map[i] > map[maxi])
+//			maxi = i;
+//	}
+//	return maxi;
+//}
+//
+//int main()
+//{
+//	int range = 0;
+//	scanf("%d", &range);
+//	long long map[100001] = { 0 };
+//	int m, n;
+//	scanf("%d %d", &m, &n);
+//	long long num = m * n;
+//	for (int i = 0; i < num; i++)
+//	{
+//		int ball = 0;
+//		scanf("%d", &ball);
+//		map[ball]++;
+//	}
+//
+//	qsort(map, range + 1, sizeof(long long), cmp_llong);
+//	long long candidate = 0, count = 0;
+//	int i = get_maxi(map, range);
+//	while(num--)
+//	{
+//		if (count == 0)
+//		{
+//			candidate = i;
+//			map[i]--;
+//			count++;
+//		}
+//		else if (candidate == i)
+//		{
+//			map[i]--;
+//			count++;
+//		}
+//		else if (candidate != i)
+//		{
+//			map[i]--;
+//			count--;
+//		}
+//		if (map[i] == 0 || num / 4 == 0)
+//			i = get_maxi(map, range);
+//	}
+//
+//	printf("%lld", count);
+//}
