@@ -1,5 +1,6 @@
 #include"sort.h"
 
+//OJ https://leetcode.cn/problems/sort-an-array/
 void TestOP()
 {
 	srand(time(0));
@@ -54,11 +55,11 @@ void TestOP()
 void sortTest()
 {
 
-	int a[] = { 2,4,6,4,8,0,3,5,4,7,4 };
+	int a[] = { 2,6,4,4,8,6,3,6,4,7,6 };
 	//int a[] = { 8,0,3,5,7 };
 	int sz = sizeof(a) / sizeof(a[0]);
 
-	MergeSortNonR(a,sz);
+	QuickSort2(a, 0, sz - 1);
 
 	for (int i = 0; i < sz; i++)
 	{
@@ -68,6 +69,7 @@ void sortTest()
 
 int main()
 {
+	srand(time(NULL));
 	//for (int i = 0; i < 11; i++)
 	//{
 	//	printf("%d/3 +1 =%d\n", i, i / 3 + 1);

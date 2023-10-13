@@ -226,6 +226,42 @@ void QuickSort(int* a, int left, int right)
 	QuickSort(a, keyi + 1,right);
 }
 
+//三路划分
+void QuickSort2(int* a, int left, int right)
+{
+	if (left >= right)
+		return;
+
+	int midi = GetMid(a, left, right);
+	Swap(&a[midi], &a[left]);
+
+	int key = a[left];
+	int cur = left + 1;
+	int begin = left, end = right;
+
+	while (cur <= right)
+	{
+		if (a[cur] < key)
+		{
+			Swap(&a[cur], &a[left]);
+			left++;
+			cur++;
+		}
+		else if (a[cur] == key)
+		{
+			cur++;
+		}
+		else
+		{
+			Swap(&a[cur], &a[right]);
+			right--;
+		}
+	}
+	QuickSort2(a, begin, left - 1);
+	QuickSort2(a, right + 1, end);
+}
+
+
 // 快速排序 非递归实现
 void QuickSortNonR(int* a, int left, int right)
 {

@@ -32,6 +32,9 @@ int PartSort2(int* a, int left, int right);
 int PartSort3(int* a, int left, int right);
 void QuickSort(int* a, int left, int right);
 
+//三路递归
+void QuickSort2(int* a, int left, int right);
+
 // 快速排序 非递归实现
 void QuickSortNonR(int* a, int left, int right);
 
