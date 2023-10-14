@@ -3,12 +3,12 @@
 #include<stdlib.h>
 #include<stdbool.h>
 
-typedef struct TreeNode
-{
-	int val;
-	struct TreeNode* left;
-	struct TreeNode* right;
-}BTNode;
+//typedef struct SListNode
+//{
+//	int val;
+//	struct TreeNode* left;
+//	struct TreeNode* right;
+//}BTNode;
 
 //µÚK²ã½Úµã
 //int TreeKLevel(BTNode* root, int k)
