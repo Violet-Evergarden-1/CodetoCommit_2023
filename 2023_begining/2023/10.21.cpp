@@ -205,56 +205,56 @@ using namespace std;
 //	return 0;
 //}
 
-int cmp_int(const void* p1, const void* p2)
-{
-	return *(int*)p1 - *(int*)p2;
-}
-
-int main()
-{
-	int num = 1;
-	cin >> num;
-	while (num--)
-	{
-		int wide = 0;
-		cin >> wide;
-		int high[100] = { 0 };
-		for (int i = 0; i < wide; i++)
-			cin >> high[i];
-		int cur = 1, prev = 0;
-		while (cur <= wide)
-		{
-			if ((high[cur] - high[prev]) % 2 == 0)
-			{
-				cur++;
-			}
-			else if ((high[cur] - high[prev]) % 2 != 0 && prev < cur - 1)
-			{
-				while (prev < cur)
-					high[prev++] = 0;
-				cur++;
-			}
-			else
-			{
-				prev++;
-				cur++;
-			}
-		}
-
-		qsort(high, wide, sizeof(int), cmp_int);
-		int min = 0, flag = 0;
-		for (int i = 0; i < wide; i++)
-		{
-			if (min == 0 && high[i] != min)
-				min = high[i];
-			if (min != 0 && (high[i] - min) % 2 != 0)
-			{
-				cout << "NO" << endl;
-				flag = 1;
-			}
-		}
-		if(flag==0)
-			cout << "YES" << endl;
-	}
-	return 0;
-}
+//int cmp_int(const void* p1, const void* p2)
+//{
+//	return *(int*)p1 - *(int*)p2;
+//}
+//
+//int main()
+//{
+//	int num = 1;
+//	cin >> num;
+//	while (num--)
+//	{
+//		int wide = 0;
+//		cin >> wide;
+//		int high[100] = { 0 };
+//		for (int i = 0; i < wide; i++)
+//			cin >> high[i];
+//		int cur = 1, prev = 0;
+//		while (cur <= wide)
+//		{
+//			if ((high[cur] - high[prev]) % 2 == 0)
+//			{
+//				cur++;
+//			}
+//			else if ((high[cur] - high[prev]) % 2 != 0 && prev < cur - 1)
+//			{
+//				while (prev < cur)
+//					high[prev++] = 0;
+//				cur++;
+//			}
+//			else
+//			{
+//				prev++;
+//				cur++;
+//			}
+//		}
+//
+//		qsort(high, wide, sizeof(int), cmp_int);
+//		int min = 0, flag = 0;
+//		for (int i = 0; i < wide; i++)
+//		{
+//			if (min == 0 && high[i] != min)
+//				min = high[i];
+//			if (min != 0 && (high[i] - min) % 2 != 0)
+//			{
+//				cout << "NO" << endl;
+//				flag = 1;
+//			}
+//		}
+//		if(flag==0)
+//			cout << "YES" << endl;
+//	}
+//	return 0;
+//}
