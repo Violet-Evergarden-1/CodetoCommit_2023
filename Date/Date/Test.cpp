@@ -8,7 +8,7 @@ void TestDate1()
 	Date d2;
 	d2.Print();
 
-	d2 = d1;
+	d2.operator=(d2);
 	d2.Print();
 }
 
@@ -47,7 +47,7 @@ void TestDate3()
 
 int main()
 {
-	TestDate2();
+	TestDate1();
 
 	return 0;
 }

@@ -51,12 +51,15 @@ Date::~Date()
 }
 
 // ¸³ÖµÔËËã·ûÖØÔØ
-// d2 = d3 -> d2.operator=(&d2, d3)
+// d2 = d3 -> d2.operator=(d3)
 Date& Date::operator=(const Date& d)
 {
-	_year = d._year;
-	_month = d._month;
-	_day = d._day;
+	if (this != &d)
+	{
+		_year = d._year;
+		_month = d._month;
+		_day = d._day;
+	}
 
 	return *this;
 }
