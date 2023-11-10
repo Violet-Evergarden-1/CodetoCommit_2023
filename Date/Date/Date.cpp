@@ -27,7 +27,7 @@ int Date::GetMonthDay(int year, int month)
 	return monthArr[month];
 }
 
-void Date::Print()
+void Date::Print()const
 {
 	cout << _year << "/" << _month << "/" << _day << endl;
 }
@@ -64,17 +64,17 @@ Date& Date::operator=(const Date& d)
 	return *this;
 }
 
-bool Date::operator==(const Date& d)
+bool Date::operator==(const Date& d)const
 {
 	return _year == d._year && _month == d._month && _day == d._day;
 }
 
-bool Date::operator != (const Date& d)
+bool Date::operator != (const Date& d)const
 {
 	return !(*this == d);
 }
 
-bool Date::operator>(const Date& d)
+bool Date::operator>(const Date& d)const
 {
 	if (_year > d._year || 
 		(_year == d._year && _month > d._month) ||
@@ -84,16 +84,16 @@ bool Date::operator>(const Date& d)
 	return false;
 }
 
-bool Date::operator<(const Date& d)
+bool Date::operator<(const Date& d)const
 {
 	return !(*this > d);
 }
 
-bool Date::operator >= (const Date& d)
+bool Date::operator >= (const Date& d)const
 {
 	return *this > d || *this == d;
 }
-bool Date::operator <= (const Date& d)
+bool Date::operator <= (const Date& d)const
 {
 	return !(*this > d);
 }
@@ -123,7 +123,7 @@ Date& Date::operator+=(int day)
 }
 
 // 日期+天数
-Date Date::operator+(int day)
+Date Date::operator+(int day)const
 {
 	Date tmp(*this);
 	tmp += day;
@@ -155,7 +155,7 @@ Date& Date::operator-=(int day)
 }
 
 // 日期-天数
-Date Date::operator-(int day)
+Date Date::operator-(int day)const
 {
 	Date tmp(*this);
 	tmp -= day;
@@ -217,7 +217,7 @@ Date Date::operator--(int)
 }
 
 // 日期-日期 返回天数
-int Date::operator-(const Date& d)
+int Date::operator-(const Date& d)const
 {
 	int flag = 1;
 	Date big(*this);
@@ -237,4 +237,18 @@ int Date::operator-(const Date& d)
 		++small;
 	}
 	return flag * count;
+}
+
+ostream& operator<<(ostream& out, const Date& d)
+{
+	out << d._year <<"年" << d._month <<"月" << d._day <<"日" << endl;
+
+	return out;
+}
+
+istream& operator>>(istream& in, Date& d)
+{
+	in >> d._year>>d._month >> d._day;
+
+	return in;
 }
