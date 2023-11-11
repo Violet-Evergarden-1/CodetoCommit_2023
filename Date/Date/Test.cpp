@@ -38,12 +38,11 @@ void TestDate2()
 
 void TestDate3()
 {
-	Date d1(2023, 10, 28);
+	Date d1(2011, 1, 1);
 	d1.Print();
 
-	Date d2(2002, 4, 29);
-	int ret1 = d2 - d1;
-	cout << ret1;
+	//Date d2(2011, 4, 22);
+	 cout<<d1 + 3;
 }
 
 void TestDate4()
@@ -83,7 +82,7 @@ void TestDate5()
 
 int main()
 {
-	TestDate5();
+	TestDate3();
 
 	return 0;
 }

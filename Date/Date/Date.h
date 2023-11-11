@@ -7,8 +7,7 @@ class Date
 {
 public:
 	// 全缺省的构造函数
-	Date(int year = 2002, int month = 4, int day = 29);
-
+	Date(int year = 2000, int month = 1, int day = 1);
 	// 拷贝构造函数
 	// d2(d1)
 	Date(const Date& d);

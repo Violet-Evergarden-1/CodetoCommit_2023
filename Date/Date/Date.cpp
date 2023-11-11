@@ -2,11 +2,10 @@
 
 // 全缺省的构造函数
 Date::Date(int year, int month, int day)
+	: _year(year)
+	, _month(month)
+	, _day(day)
 {
-	_year = year;
-	_month = month;
-	_day = day;
-
 	if (_year < 1 || _month < 1 || _month>12 || _day<1 || _day>GetMonthDay(_year, _month))
 	{
 		//assert(false);
@@ -14,24 +13,6 @@ Date::Date(int year, int month, int day)
 		cout << "日期非法" << endl;
 	}
 }
-
-//获取某年某月的天数
-int Date::GetMonthDay(int year, int month)
-{
-	assert(year >= 1 && month >= 1 && month <= 12);
-
-	int monthArr[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
-	if (month == 2 && (year % 400 == 0 || year % 4 == 0 && year % 100 != 0))
-		return 29;
-	
-	return monthArr[month];
-}
-
-void Date::Print()const
-{
-	cout << _year << "/" << _month << "/" << _day << endl;
-}
-
 
 // 拷贝构造函数
 // Date d2(d1)
@@ -48,6 +29,23 @@ Date::~Date()
 	_year = 0;
 	_month = 0;
 	_day = 0;
+}
+
+//获取某年某月的天数
+int Date::GetMonthDay(int year, int month)
+{
+	assert(year >= 1 && month >= 1 && month <= 12);
+
+	int monthArr[13] = { 0,31,28,31,30,31,30,31,31,30,31,30,31 };
+	if (month == 2 && (year % 400 == 0 || year % 4 == 0 && year % 100 != 0))
+		return 29;
+
+	return monthArr[month];
+}
+
+void Date::Print()const
+{
+	cout << _year << "/" << _month << "/" << _day << endl;
 }
 
 // 赋值运算符重载
@@ -241,7 +239,9 @@ int Date::operator-(const Date& d)const
 
 ostream& operator<<(ostream& out, const Date& d)
 {
-	out << d._year <<"年" << d._month <<"月" << d._day <<"日" << endl;
+	out << d._year << "-";
+	printf("%02d-", d._month);
+	printf("%02d\n", d._day);
 
 	return out;
 }
