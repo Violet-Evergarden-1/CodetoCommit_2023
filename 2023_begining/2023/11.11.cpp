@@ -25,14 +25,37 @@ private:
 };
 
 int Solution::_i = 1;
-int Solution::_ret = 1;
+int Solution::_ret = 0;
 
-int main()
-{
-	Solution s1;
-	int n;
-	cin >> n;
-	cout << s1.Sum_Solution(n);
-
-	return 0;
-}
+//class Sum
+//{
+//public:
+//	Sum()
+//	{
+//		_ret += _i;
+//		_i++;
+//	}
+//
+//	static int GetRet()
+//	{
+//		return _ret;
+//	}
+//private:
+//	static int _ret;
+//	static int _i;
+//};
+//
+//class Solution
+//{
+//public:
+//	int Sum_Solution(int n)
+//	{
+//		Sum arr[n];
+//
+//		return Sum::GetRet();
+//	}
+//
+//};
+//
+//int Sum::_ret = 0;
+//int Sum::_i = 0;
