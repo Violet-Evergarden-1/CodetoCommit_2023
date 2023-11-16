@@ -1,31 +1,31 @@
 #include<iostream>
 using namespace std;
 
-class Solution
-{
-	class Sum
-	{
-	public:
-		Sum()
-		{
-			_ret += _i;
-			_i++;
-		}
-	};
-public:
-	int Sum_Solution(int n)
-	{
-		Sum arr[n];
-
-		return _ret;
-	}
-private:
-	static int _i;
-	static int _ret;
-};
-
-int Solution::_i = 1;
-int Solution::_ret = 0;
+//class Solution
+//{
+//	class Sum
+//	{
+//	public:
+//		Sum()
+//		{
+//			_ret += _i;
+//			_i++;
+//		}
+//	};
+//public:
+//	int Sum_Solution(int n)
+//	{
+//		Sum arr[n];
+//
+//		return _ret;
+//	}
+//private:
+//	static int _i;
+//	static int _ret;
+//};
+//
+//int Solution::_i = 1;
+//int Solution::_ret = 0;
 
 //class Sum
 //{
