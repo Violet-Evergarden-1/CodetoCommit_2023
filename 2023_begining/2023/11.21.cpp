@@ -217,51 +217,62 @@ using namespace std;
 //    return 0;
 //}
 
-#include <iostream>
-#include <cmath>
-using namespace std;
-float len(int x1, int y1, int x2, int y2)
-{
-    int t = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
-    return sqrt(t);
-}
-int main()
-{
-    int xa, ya, xb, yb, xo, yo, R;
-    cin >> xa >> ya >> xb >> yb >> xo >> yo >> R;
-    if (xa == xb && ya == yb)
-    {
-        cout << "N"; return 0;
-    }
-    float OA = len(xa, ya, xo, yo);
-    float OB = len(xb, yb, xo, yo);
-    if (OA <= (float)R || OB <= (float)R)
-    {
-        cout << "Y"; return 0;
-    }
-    else
-    {
-        int son_cos = (xo - xa) * (xb - xa) + (yo - ya) * (yb - ya);
-        float mother_cos = len(xa, ya, xo, yo) * len(xa, ya, xb, yb);
-        float cos = (float)son_cos / mother_cos;
-        float my_sin = sqrt(1 - cos * cos);
-        float sin = (float)R / len(xa, ya, xo, yo);
-        if (cos <= 0)
-        {
-            cout << "N";
+//#include <iostream>
+//#include <cmath>
+//using namespace std;
+//float len(int x1, int y1, int x2, int y2)
+//{
+//    int t = (x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2);
+//    return sqrt(t);
+//}
+//int main()
+//{
+//    int xa, ya, xb, yb, xo, yo, R;
+//    cin >> xa >> ya >> xb >> yb >> xo >> yo >> R;
+//    if (xa == xb && ya == yb)
+//    {
+//        cout << "N"; return 0;
+//    }
+//    float OA = len(xa, ya, xo, yo);
+//    float OB = len(xb, yb, xo, yo);
+//    if (OA <= (float)R || OB <= (float)R)
+//    {
+//        cout << "Y"; return 0;
+//    }
+//    else
+//    {
+//        int son_cos = (xo - xa) * (xb - xa) + (yo - ya) * (yb - ya);
+//        float mother_cos = len(xa, ya, xo, yo) * len(xa, ya, xb, yb);
+//        float cos = (float)son_cos / mother_cos;
+//        float my_sin = sqrt(1 - cos * cos);
+//        float sin = (float)R / len(xa, ya, xo, yo);
+//        if (cos <= 0)
+//        {
+//            cout << "N";
+//
+//        }
+//        else if (my_sin <= sin)
+//        {
+//            cout << "Y";
+//
+//        }
+//        else
+//        {
+//            cout << "N";
+//
+//        }
+//    }
+//
+//    return 0;
+//}
 
-        }
-        else if (my_sin <= sin)
-        {
-            cout << "Y";
-
-        }
-        else
-        {
-            cout << "N";
-
-        }
-    }
-
-    return 0;
-}
+//int main()
+//{
+//	int s = 0, pos = 0;
+//	for (int i = 10; i!= 1; i--)
+//	{
+//		s = s + 1;
+//		printf("%d", pos++);
+//	}
+//	return 0;
+//}
