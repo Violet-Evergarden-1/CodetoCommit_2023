@@ -1,93 +1,221 @@
-#include<iostream>
+ï»¿#include<iostream>
 #include<string>
+#include<vector>
 using namespace std;
 
-#include <iostream>
+//344. åè½¬å­—ç¬¦ä¸²
+//https://leetcode.cn/problems/reverse-string/description/
 
-// º¯Êı£ºÅĞ¶ÏÄ³Äê·İÊÇ·ñÎªÈòÄê
-bool isLeapYear(int year) {
-    if (year % 400 == 0) {
-        return true;
-    }
-    else if (year % 100 == 0) {
-        return false;
-    }
-    else if (year % 4 == 0) {
-        return true;
-    }
-    else {
-        return false;
-    }
-}
+//class Solution {
+//public:
+//    void reverseString(vector<char>& s) 
+//    {
+//        int left = 0, right = s.size()-1;
+//        
+//        while (left < right)
+//        {
+//            swap(s[left], s[right]);
+//            left++;
+//            right--;
+//        }
+//        
+//        for (auto ch : s)
+//        {
+//            cout << ch;
+//        }
+//    }
+//};
+//
+//int main()
+//{
+//    Solution s1;
+//    vector <char> s ;
+//    s.push_back('h');
+//    s.push_back('e');
+//    s.push_back('l');
+//    s.push_back('l');
+//    s.push_back('o');
+//    s1.reverseString(s);
+//}
 
-// º¯Êı£º»ñÈ¡Ä³ÄêÄ³ÔÂµÄÌìÊı
-int getDaysInMonth(int year, int month) {
-    if (month == 2) {
-        if (isLeapYear(year)) {
-            return 29;
-        }
-        else {
-            return 28;
-        }
-    }
-    else if (month == 4 || month == 6 || month == 9 || month == 11) {
-        return 30;
-    }
-    else {
-        return 31;
-    }
-}
+//387. å­—ç¬¦ä¸²ä¸­çš„ç¬¬ä¸€ä¸ªå”¯ä¸€å­—ç¬¦
+//https://leetcode.cn/problems/first-unique-character-in-a-string/description/
 
-int getFirstDay(int year, int month)
-{
-    int y = year - (14 - month) / 12;
-    int x = y + y / 4 - y / 100 + y / 400;
-    int m = month + 12*((14 - month) / 12) - 2;
-    int d = (1 + x + (31 * m) / 12) % 7;
-    
-    return d;
-}
+//class Solution {
+//public:
+//    int firstUniqChar(string s)
+//    {
+//        int count[26] = { 0 };
+//        for (auto ch : s)
+//        {
+//            count[ch - 'a']++;
+//        }
+//
+//        for (size_t i = 0; i < s.size(); i++)
+//        {
+//            if (count[s[i] - 'a'] == 1)
+//                return  i;
+//        }
+//        return -1;
+//    }
+//};
+//
+//int main()
+//{
+//    string s1("EETCODE");
+//    string s2("loveleetcode");
+//    string s3("aabb");
+//
+//    Solution solution;
+//    cout << solution.firstUniqChar(s1) << endl;
+//    cout << solution.firstUniqChar(s2) << endl;
+//    cout << solution.firstUniqChar(s3) << endl;
+//
+//    return 0;
+//}
 
 
-// º¯Êı£º´òÓ¡Ä³ÄêÄ³ÔÂµÄÈÕÀú
-void printCalendar(int year, int month) {
-    // »ñÈ¡¸ÃÔÂµÄÌìÊı
-    int days = getDaysInMonth(year, month);
+//int main()
+//{
+//	string strText = "How are you?";
+//	string strSeparator = " ";
+//	string strResult;
+//	int size_pos = 0;
+//	int size_prev_pos = 0;
+//	while ((size_pos = strText.find_first_of(strSeparator, size_pos)) != string::npos)
+//	{
+//		strResult = strText.substr(size_prev_pos, size_pos - size_prev_pos);
+//		cout << strResult << " ";
+//		size_prev_pos = ++size_pos;
+//	}
+//	if (size_prev_pos != strText.size())
+//	{
+//		strResult = strText.substr(size_prev_pos, size_pos - size_prev_pos);
+//		cout << strResult << " ";
+//	}
+//	cout << endl;
+//
+//	return 0;
+//}
 
-    // »ñÈ¡¸ÃÔÂµÄµÚÒ»ÌìÊÇĞÇÆÚ¼¸
-    int firstDay = getFirstDay(year,month); // ¼ÙÉèÃ¿¸öÔÂµÄµÚÒ»Ìì¶¼ÊÇĞÇÆÚÒ»
-    //cout << "firstday" << firstDay << endl;
 
-    // ´òÓ¡¸ÃÔÂµÄÈÕÀú
-    int dayCount = 1;
-    for (int row = 0; row < 6; row++) {
 
-        for (int col = 0; col < 7; col++) {
-            
-            if (row == 0 && col < firstDay) {
-                cout << "    "; // ¸ÃÈÕÆÚ²»ÔÚ¸ÃÔÂ·¶Î§ÄÚ£¬ÓÃ¿Õ¸ñÕ¼Î»
-            }
-            else if (dayCount > days) {
-                break; // ÒÑ¾­´òÓ¡Íê¸ÃÔÂµÄËùÓĞÈÕÆÚ
-            }
-            else {
-                // ´òÓ¡ÈÕÆÚ£¬²¢¸ù¾İ¸ñÊ½µ÷Õû¶ÔÆë
-                if (dayCount < 10) {
-                    cout << ' ';
-                }
-                cout << "  " << dayCount ;
-                dayCount++;
-            }
-        }
-        cout << endl;
-    }
-}
+//415. å­—ç¬¦ä¸²ç›¸åŠ 
+//https://leetcode.cn/problems/add-strings/description/
 
-int main() {
-    int year, month;
-    cin >> year >> month;
+//è§£æ³•1ï¼šä½¿ç”¨å¤´æ’ï¼Œæ•ˆç‡O(N^2)
+//è§£æ³•2ï¼šå°¾æ’ï¼Œæœ€åreverse
+//class Solution {
+//public:
+//    string addStrings(string num1, string num2)
+//    {
+//        int end1 = num1.size() - 1, end2 = num2.size() - 1;
+//        string ret;
+//
+//        int next = 0;
+//        while (end1 >= 0 || end2 >= 0)
+//        {
+//            int val1 = 0, val2 = 0;
+//            if (end1 >= 0)
+//                val1 = num1[end1--] - '0';
+//
+//            if (end2 >= 0)
+//                val2 = num2[end2--] - '0';
+//
+//            int cur = val1 + val2 + next;
+//            next = cur / 10;
+//            cur %= 10;
+//            //ret.insert(0, 1, cur + '0');
+//            ret += cur + '0';
+//        }
+//
+//        if (next == 1)
+//        {
+//            //ret.insert(0, 1, '1');
+//            ret += '1';
+//        }
+//        reverse(ret.begin(), ret.end());
+//
+//        return ret;
+//    }
+//};
+//
+//int main()
+//{
+//    string s1("12");
+//    string s2("123");
+//    Solution solution;
+//    cout<<solution.addStrings(s1, s2);
+//
+//    return 0;
+//}
 
-    printCalendar(year, month);
 
-    return 0;
-}
+
+//125. éªŒè¯å›æ–‡ä¸²
+//https ://leetcode.cn/problems/valid-palindrome/description/
+
+//è§£æ³•1ï¼šç¬¨æ¯”
+//class Solution {
+//public:
+//    bool isPalindrome(string s) 
+//    {
+//        string copy;
+//        for (int i = 0; i < s.size(); i++)
+//        {
+//            if ((s[i] >= '0' && s[i] <= '9') || (s[i] >= 'a' && s[i] <= 'z'))
+//                copy.push_back(s[i]);
+//            if (s[i] >= 'A' && s[i] <= 'Z')
+//                copy.push_back(s[i] - 'A' + 'a');
+//        }
+//        string rev(copy);
+//        reverse(rev.begin(), rev.end());
+//        if (copy.compare(rev) == 0)
+//            return 1;
+//        else
+//            return 0;
+//    }
+//};
+
+//è§£æ³•2ï¼šå†…ç½®å‡½æ•°
+// islower(char c) æ˜¯å¦ä¸ºå°å†™å­—æ¯
+//isupper(char c) æ˜¯å¦ä¸ºå¤§å†™å­—æ¯
+//isdigit(char c) æ˜¯å¦ä¸ºæ•°å­—
+//isalpha(char c) æ˜¯å¦ä¸ºå­—æ¯
+//isalnum(char c) æ˜¯å¦ä¸ºå­—æ¯æˆ–è€…æ•°å­—
+//toupper(char c) å­—æ¯å°è½¬å¤§
+//tolower(char c) å­—æ¯å¤§è½¬å°
+//class Solution {
+//public:
+//    bool isPalindrome(string s)
+//    {
+//        string trans;
+//        for (auto ch : s)
+//        {
+//            //if (islower(ch)||isdigit(ch))
+//            //    trans += ch;
+//            //if (isupper(ch))
+//            //    trans += ch - 'A' + 'a';
+//
+//            if (isalnum(ch))
+//                trans += tolower(ch);
+//        }
+//       
+//        int begin = 0, end = trans.size() - 1;
+//        
+//        while (begin <end)
+//        {
+//            if (trans[begin++] != trans[end--])
+//                return 0;
+//        }
+//        return 1;
+//    }
+//};
+//
+//int main()
+//{
+//    string s1("A man, a plan, a canal : Panama");
+//    Solution s;
+//    cout << s.isPalindrome(s1);
+//}
+
