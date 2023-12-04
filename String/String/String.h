@@ -1,6 +1,8 @@
 #pragma once
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<iostream>
+#include<string>
+#include<assert.h>
 using namespace std;
 
 namespace syz
@@ -63,7 +65,10 @@ namespace syz
         {
             return _capacity;
         }
-        bool empty()const;
+        bool empty()const
+        {
+            return _size == 0;
+        }
         void resize(size_t n, char c = '\0');
         void reserve(size_t n);
 

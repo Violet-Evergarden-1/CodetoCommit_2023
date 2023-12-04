@@ -75,21 +75,30 @@ namespace syz
         _str[0] = '\0';
         _size = 0;
     }
-    //void string::swap(string& s)
-    //{
+    void string::swap(string& s)
+    {
+        std::swap(_size, s._size);
+        std::swap(_capacity, s._capacity);
+        std::swap(_str, s._str);
+    }
 
-    //}
-
-    //// capacity
-
-    //bool string::empty()const 
-    //{
-
-    //}
-    //void string::resize(size_t n, char c )
-    //{
-
-    //}
+    // capacity
+    void string::resize(size_t n, char c )
+    {
+        if (n < _size)
+        {
+            _str[n] = '\0';
+            _size = n;
+        }
+        if (n > _size)
+        {
+            reserve(n);
+            while (_size != n)
+            {
+                (*this) += 'c';
+            }
+        }
+    }
     void string::reserve(size_t n)
     {
         if (n > _capacity)
@@ -103,70 +112,109 @@ namespace syz
     }
 
     //// access
-    //char& string::operator[](size_t index)
-    //{
+    char& string::operator[](size_t index)
+    {
+        return _str[index];
+    }
+    const char& string::operator[](size_t index)const
+    {
+        return _str[index];
+    }
 
-    //}
-    //const char& string::operator[](size_t index)const
-    //{
+    //relational operators
+    bool string::operator<(const string& s) 
+    {
+        return strcmp(_str, s._str) < 0;
+    }
+    bool string::operator<=(const string& s)
+    {
+        return !(*this > s);
+    }
+    bool string::operator>(const string& s)
+    {
+        return strcmp(_str, s._str) > 0;
+    }
+    bool string::operator>=(const string& s)
+    {
+        return !(*this < s);
+    }
+    bool string::operator==(const string& s)
+    {
+        return strcmp(_str, s._str) == 0;
+    }
+    bool string::operator!=(const string& s)
+    {
+        return !(*this == s);
+    }
 
-    //}
+    // 返回c在string中第一次出现的位置
+    size_t string::find(char c, size_t pos) const
+    {
+        for (size_t i = pos; i < _size; i++)
+        {
+            if ((*this)[i] == c)
+                return i;
+        }
+        return npos;
+    }
+    // 返回子串s在string中第一次出现的位置
+    size_t string::find(const char* s, size_t pos) const
+    {
+        char* ptr = std::strstr(_str + pos, s);
+        if (ptr == nullptr)
+            return npos;
+        else
+            return ptr - _str;
+    }
+    string string::substr(size_t pos, size_t len)
+    {
+        assert(pos < _size);
+        size_t end = pos + len;
+        if (len == npos || end >= _size)
+            end = _size;
 
-    ////relational operators
-    //bool string::operator<(const string& s) 
-    //{
+        string tmp;
+        tmp.reserve(end - pos);
+        for (size_t i = pos; i < end; i++)
+        {
+            tmp += _str[i];
+        }
+  
+        return tmp;
+    }
+    // 在pos位置上插入字符c/字符串str，并返回该字符的位置
+    string& string::insert(size_t pos, char c)
+    {
+        assert(pos <= _size);
+        reserve(_capacity + 1);
+        std::memmove(_str + pos + 1, _str + pos, _size - pos + 1);
+        _str[pos] = c;
+        _size++;
 
-    //}
-    //bool string::operator<=(const string& s)
-    //{
+        return *this;
+    }
+    string& string::insert(size_t pos, const char* str)
+    {
+        assert(pos <= _size);
+        size_t len = strlen(str);
+        reserve(_capacity + len);
+        std::memmove(_str + pos + len, _str + pos, _size - pos + 1);
+        std::strncpy(_str + pos, str, len);
+        _size += len;
 
-    //}
-    //bool string::operator>(const string& s)
-    //{
+        return *this;
+    }
+    // 删除pos位置上的元素，并返回该元素的下一个位置
+    string& string::erase(size_t pos, size_t len)
+    {
+        if (len == npos)
+        {
+            _str[pos] = '\0';
+        }
+        std::memmove(_str + pos, _str + pos + len, _size - pos - len + 1);          
 
-    //}
-    //bool string::operator>=(const string& s)
-    //{
-
-    //}
-    //bool string::operator==(const string& s)
-    //{
-
-    //}
-    //bool string::operator!=(const string& s)
-    //{
-
-    //}
-
-
-    //// 返回c在string中第一次出现的位置
-    //size_t string::find(char c, size_t pos) const
-    //{
-
-    //}
-    //// 返回子串s在string中第一次出现的位置
-    //size_t string::find(const char* s, size_t pos) const
-    //{
-
-    //}
-    //string string::substr(size_t pos, size_t len)
-    //{
-
-    //}
-    //// 在pos位置上插入字符c/字符串str，并返回该字符的位置
-    //string& string::insert(size_t pos, char c)
-    //{
-
-    //}
-    //string& string::insert(size_t pos, const char* str)
-    //{
-
-    //}
-    //// 删除pos位置上的元素，并返回该元素的下一个位置
-    //string& string::erase(size_t pos, size_t len)
-    //{
-
-    //}
+        return *this;
+    }
 
     istream& operator>>(istream& in, string& s)
     {
@@ -174,21 +222,21 @@ namespace syz
         char buff[128];
         int i = 0;
         char ch = in.get();
-        while (ch != '\n')
+        while (ch != ' ' && ch != '\n')
         {
             buff[i++] = ch;
+            ch = in.get();
             if (i == 127)
             {
                 buff[i] = '\0';
                 s += buff;
                 i = 0;
             }
-            buff[i] = '\0';
-            s += buff;
-
-            return in;
         }
-        return cin;
+        buff[i] = '\0';
+        s += buff;
+
+        return in;
     }
 
     ostream& operator<<(ostream& out, const string& s)
