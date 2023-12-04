@@ -160,55 +160,76 @@ using namespace std;
 空间复杂度：O(N)
 */
 
-class Solution
-{
-public:
-    string multiply(string num1, string num2)//"1234" "567"
-    {
-        if (num1 == "0" || num2 == "0")
-            return "0";
-        int m = num1.size(), n = num2.size();
-        vector<int> retArr(m + n);
+//class Solution
+//{
+//public:
+//    string multiply(string num1, string num2)//"1234" "567"
+//    {
+//        if (num1 == "0" || num2 == "0")
+//            return "0";
+//        int m = num1.size(), n = num2.size();
+//        vector<int> retArr(m + n);
+//
+//        //将每一位运算结果存在数组中
+//        for (int i = m-1; i >=0; i--)
+//        {
+//            int val1 = num1[i] - '0';
+//            for (int j = n - 1; j >= 0; j--)
+//            {
+//                int val2 = num2[j] - '0';
+//                retArr[i + j + 1] += val1 * val2;
+//            }
+//        }
+//        //0 5 16 34 52 45 28
+//
+//        //相加成为一个数
+//        for (int i = m + n - 1; i > 0; i--)
+//        {
+//            retArr[i - 1] += retArr[i] / 10;
+//            retArr[i] %= 10;
+//        }
+//        //0 6 9 9 6 7 8
+//
+//        //如果最高位是0则从数组第二项开始转换
+//        string ret;
+//        int index = (retArr[0] == 0 ? 1 : 0);
+//        while (index < m + n)
+//        {
+//            ret += retArr[index++] + '0';
+//        }
+//
+//        return ret;
+//    }
+//};
+//
+//
+//int main()
+//{
+//    Solution s;
+//    string s1("1234");
+//    string s2("567");
+//    cout<<s.multiply(s1, s2);
+//
+//    return 0;
+//}
 
-        //将每一位运算结果存在数组中
-        for (int i = m-1; i >=0; i--)
-        {
-            int val1 = num1[i] - '0';
-            for (int j = n - 1; j >= 0; j--)
-            {
-                int val2 = num2[j] - '0';
-                retArr[i + j + 1] += val1 * val2;
-            }
-        }
-        //0 5 16 34 52 45 28
-
-        //相加成为一个数
-        for (int i = m + n - 1; i > 0; i--)
-        {
-            retArr[i - 1] += retArr[i] / 10;
-            retArr[i] %= 10;
-        }
-        //0 6 9 9 6 7 8
-
-        //如果最高位是0则从数组第二项开始转换
-        string ret;
-        int index = (retArr[0] == 0 ? 1 : 0);
-        while (index < m + n)
-        {
-            ret += retArr[index++] + '0';
-        }
-
-        return ret;
-    }
-};
 
 
-int main()
-{
-    Solution s;
-    string s1("1234");
-    string s2("567");
-    cout<<s.multiply(s1, s2);
+//字符串最后一个单词的长度
+//https://www.nowcoder.com/practice/8c949ea5f36f422594b306a2300315da?tpId=37&&tqId=21224&rp=5&ru=/activity/oj&qru=/ta/huawei/question-ranking
 
-    return 0;
-}
+//int main()
+//{
+//	string s;
+//	getline(cin, s);
+//
+//	int index = 0;
+//	for (int i=0;i<s.size();i++)
+//	{
+//		if (s[i] == ' ')
+//			index = i + 1;
+//	}
+//	cout << s.size() - index;
+//
+//	return 0;
+//}
