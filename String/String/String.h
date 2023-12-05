@@ -107,3 +107,4 @@ namespace syz
     istream& operator>>(istream& in, string& s);
     ostream& operator<<(ostream& out, const string& s);
 }
+
