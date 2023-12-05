@@ -10,23 +10,41 @@ namespace syz
 
         strcpy(_str, str);
     }
+
+    //string::string(const string& s)
+    //{
+    //    _str = new char[s.capacity() + 1];
+    //    _size = s.size();
+    //    _capacity = s.capacity();
+
+    //    strcpy(_str, s.c_str());
+    //}
+
+    //复用写法
     string::string(const string& s)
     {
-        _str = new char[s.capacity() + 1];
-        _size = s.size();
-        _capacity = s.capacity();
-
-        strcpy(_str, s.c_str());
+        //string tmp = s;不会调用=（赋值重载），调用拷贝构造
+        string tmp(s._str);
+        swap(tmp);
     }
 
-    string& string::operator=(const string& s)
-    {
-        delete[] _str;
-        _str = new char[s.capacity() + 1];
-        _size = s.size();
-        _capacity = s.capacity();
 
-        strcpy(_str, s.c_str());
+    //string& string::operator=(const string& s)
+    //{
+    //    delete[] _str;
+    //    _str = new char[s.capacity() + 1];
+    //    _size = s.size();
+    //    _capacity = s.capacity();
+
+    //    strcpy(_str, s.c_str());
+    //    return *this;
+    //}
+
+    //复用写法
+    string& string::operator=(string s)
+    {
+        swap(s);
+
         return *this;
     }
 
@@ -44,7 +62,7 @@ namespace syz
         if (_capacity == _size)
         {
             int newCapacity = (_capacity == 0 ? 4 : 2 * _capacity);
-            this->reserve(newCapacity);
+            reserve(newCapacity);
         }
 
         _str[_size++] = c;
@@ -55,6 +73,7 @@ namespace syz
         this->push_back(c);
         return *this;
     }
+
     void string::append(const char* str)
     {
         if (_capacity < _size + strlen(str))
@@ -65,16 +84,19 @@ namespace syz
         strcat(_str + _size, str);
         _size += strlen(str);
     }
+
     string& string::operator+=(const char* str)
     {
         this->append(str);
         return *this;
     }
+
     void string::clear()
     {
         _str[0] = '\0';
         _size = 0;
     }
+
     void string::swap(string& s)
     {
         std::swap(_size, s._size);
@@ -114,10 +136,14 @@ namespace syz
     //// access
     char& string::operator[](size_t index)
     {
+        assert(index <= _size);
+
         return _str[index];
     }
     const char& string::operator[](size_t index)const
     {
+        assert(index <= _size);
+
         return _str[index];
     }
 
@@ -152,7 +178,7 @@ namespace syz
     {
         for (size_t i = pos; i < _size; i++)
         {
-            if ((*this)[i] == c)
+            if (_str[i] == c)
                 return i;
         }
         return npos;
@@ -160,7 +186,7 @@ namespace syz
     // 返回子串s在string中第一次出现的位置
     size_t string::find(const char* s, size_t pos) const
     {
-        char* ptr = std::strstr(_str + pos, s);
+        char* ptr = strstr(_str + pos, s);
         if (ptr == nullptr)
             return npos;
         else
@@ -169,6 +195,7 @@ namespace syz
     string string::substr(size_t pos, size_t len)
     {
         assert(pos < _size);
+
         size_t end = pos + len;
         if (len == npos || end >= _size)
             end = _size;
@@ -186,8 +213,21 @@ namespace syz
     string& string::insert(size_t pos, char c)
     {
         assert(pos <= _size);
-        reserve(_capacity + 1);
-        std::memmove(_str + pos + 1, _str + pos, _size - pos + 1);
+
+        if (_capacity == _size)
+        {
+            int newCapacity = (_capacity == 0 ? 4 : 2 * _capacity);
+            reserve(newCapacity);
+        }
+
+        //memmove(_str + pos + 1, _str + pos, _size - pos + 1);
+        size_t end = _size + 1;
+        while (end > pos)
+        {
+            _str[end] = _str[end - 1];
+            --end;
+        }
+
         _str[pos] = c;
         _size++;
 
@@ -196,22 +236,39 @@ namespace syz
     string& string::insert(size_t pos, const char* str)
     {
         assert(pos <= _size);
+
         size_t len = strlen(str);
-        reserve(_capacity + len);
-        std::memmove(_str + pos + len, _str + pos, _size - pos + 1);
-        std::strncpy(_str + pos, str, len);
+        if(_size+len>_capacity)
+            reserve(_capacity + len);
+
+        //memmove(_str + pos + len, _str + pos, _size - pos + 1);
+        size_t end = _size + len;
+        while (end > pos)
+        {
+            _str[end] = _str[end - len];
+            --end;
+        }
+
+        strncpy(_str + pos, str, len);
         _size += len;
 
         return *this;
     }
-    // 删除pos位置上的元素，并返回该元素的下一个位置
+    // 删除pos位置及以后的len个元素
     string& string::erase(size_t pos, size_t len)
     {
-        if (len == npos)
+        assert(pos < _size);
+
+        if (len == npos || pos + len >= _size)
         {
             _str[pos] = '\0';
+            _size = pos - 0;
         }
-        std::memmove(_str + pos, _str + pos + len, _size - pos - len + 1);          
+        else
+        {
+            strcpy(_str + pos, _str + pos + len);
+            _size -= len;
+        }
 
         return *this;
     }
@@ -221,17 +278,18 @@ namespace syz
         s.clear();
         char buff[128];
         int i = 0;
-        char ch = in.get();
+        char ch = in.get();//能获取空格和\n
         while (ch != ' ' && ch != '\n')
         {
             buff[i++] = ch;
-            ch = in.get();
             if (i == 127)
             {
                 buff[i] = '\0';
                 s += buff;
                 i = 0;
             }
+
+            ch = in.get();
         }
         buff[i] = '\0';
         s += buff;
@@ -243,7 +301,7 @@ namespace syz
     {
         for (auto ch : s)
         {
-            cout << ch;
+            out << ch;//不用cout
         }
         return out;
     }

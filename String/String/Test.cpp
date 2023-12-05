@@ -9,7 +9,7 @@ namespace syz
 		string s3(s2);
 		string s4 = s2;
 
-		cin >> s2;
+		//cin >> s1;
 
 		cout << s1 << endl;
 		cout << s2 << endl;
@@ -22,10 +22,20 @@ namespace syz
 		string s2("1234 abcd");
 		s2.push_back('\0');
 		cout << s2 << endl;
-		s2 += '0';
+		cout << s2.size() << endl;
+		cout << s2.capacity() << endl;
+		s2 += '\0';
 		cout << s2 << endl;
-		s2 += " abcd";
+		cout << s2.size() << endl;
+		cout << s2.capacity() << endl;
+		s2 += 'a';
 		cout << s2 << endl;
+		cout << s2.size() << endl;
+		cout << s2.capacity() << endl;
+		s2 += "a\0cccccccccccc";
+		cout << s2 << endl;
+		cout << s2.size() << endl;
+		cout << s2.capacity() << endl;
 	}
 
 	void Test3()
@@ -92,7 +102,7 @@ namespace syz
 		cout << s1 << endl;
 		cout << s1.size() << endl;
 		cout << s1.capacity() << endl;
-		s1.insert(12, "000");
+		s1.insert(-1, "000");
 		cout << s1 << endl;
 		cout << s1.size() << endl;
 		cout << s1.capacity() << endl;
@@ -104,16 +114,38 @@ namespace syz
 		cout << s1 << endl;
 		cout << s1.size() << endl;
 		cout << s1.capacity() << endl;
-		s1.erase();
+		s1.erase(12);
 		cout << s1 << endl;
 		cout << s1.size() << endl;
 		cout << s1.capacity() << endl;
 	}
 }
 
+
+void Test2()
+{
+	string s2("1234 abcd");
+	s2.push_back('\0');
+	cout << s2 << endl;
+	cout << s2.size() << endl;
+	cout << s2.capacity() << endl;
+	s2 += '\0';
+	cout << s2 << endl;
+	cout << s2.size() << endl;
+	cout << s2.capacity() << endl;
+	s2 += 'a';
+	cout << s2 << endl;
+	cout << s2.size() << endl;
+	cout << s2.capacity() << endl;
+	s2 += "a\0cccccccccccc";
+	cout << s2 << endl;
+	cout << s2.size() << endl;
+	cout << s2.capacity() << endl;
+}
+
 int main()
 {
-	syz::Test7();
+	syz::Test2();
 	
 	return 0;
 }

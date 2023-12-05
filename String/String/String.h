@@ -17,7 +17,7 @@ namespace syz
 
         string(const char* str = "");
         string(const string& s);
-        string& operator=(const string& s);
+        string& operator=(string s);
         ~string();
 
         // iterator
