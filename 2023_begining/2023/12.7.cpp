@@ -8,7 +8,7 @@ using namespace std;
 //https://leetcode.cn/problems/letter-combinations-of-a-phone-number/description/
 
 
-//究极无敌暴力循环
+//究极无敌笨比暴力循环
 //class Solution {
 //public:
 //    vector<string> letterCombinations(string digits) {
