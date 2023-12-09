@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS 1
 #include<iostream>
 #include<vector>
 using namespace std;
@@ -92,3 +93,30 @@ using namespace std;
 //        cout << num << ' ';
 //    }
 //}
+
+#include <iostream>
+using namespace std;
+
+int countQueueVarieties(int numof50, int numof100)
+{
+    if (numof100 == 0)
+    {
+        return 1;
+    }
+    else if (numof50 < numof100)
+    {
+        return 0;
+    }
+    else
+    {
+        return countQueueVarieties(numof50, numof100 - 1) + countQueueVarieties(numof50 - 1, numof100);
+    }
+}
+
+int main()
+{
+    int numof50 = 20, numof100 = 10;
+    
+    cout << "不同排队种数为：" << countQueueVarieties(numof50, numof100);
+    return 0;
+}
